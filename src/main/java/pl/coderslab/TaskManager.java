@@ -94,43 +94,33 @@ public class TaskManager {
                     for (int i = 0; i < getLinesNumber(); i++) {
                         String task = scan.nextLine();
                         usersArray[i] = task;                      //ZAPELNIAM TABLICE JEDNOWYMIAROWA LINIAMI Z PLIKU
-                       // for (int j = 0; j < 4; j++) {
-                           // usersArray[i][j] = Arrays.toString(task.split(","));
-                            //   usersArray[i] = Arrays.toString(scan.nextLine().split(","));
-                       // }
                     }
 
-                    //System.out.println((Arrays.toString(usersArray[2])));
                 }
                 System.out.println(Arrays.toString(usersArray));
                 String[][] taskArray=new String [getLinesNumber()][4];
                 for (int i = 0; i < getLinesNumber(); i++) {
-                    for (int j = 0; j < 4; j++) {
-                        taskArray[i]=usersArray[i].split(",");   //UZUPELNIAM TABLICE 2WYMIAROWA ELEMENTAMII Z KAZDEJ LINII
-
-                    }
+                        taskArray[i]=usersArray[i].split(",");   //UZUPELNIAM TABLICE 2WYMIAROWA ELEMENTAMII Z KAZDEJ LINII ale bez licznika pozycji
                 }
                 System.out.println(Arrays.toString(taskArray[1]));
                 System.out.println(taskArray[1][1]);
-                // uzyc Stringbuildera !!!!!!!!!!!
-               // System.out.println((usersArray[2][2]));
+                String[][] numberedTaskArray=new String [getLinesNumber()][4];
+                int licznik=1;
+                for (int i = 0; i < getLinesNumber(); i++) {
+                    for (int j = 0; j < 3; j++) {
+
+                        numberedTaskArray[i][j+1] = taskArray[i][j];
+                        if (i==j+1) {                                                         // DODAWANIE NUMEROW WIERSZY
+                            numberedTaskArray[i][j] = (licznik)+":";
+                        }
+                    }
+                }
+                System.out.println("lista taskow ponumerowana");
+                System.out.println(Arrays.toString(numberedTaskArray[1]));
+
             } catch (FileNotFoundException exception) {
                 exception.printStackTrace();
             }
-//        Path path1 = Paths.get("tasks.csv");
-//        try {
-//            String[] arrayList = new String[3];
-//            for (String line : Files.readAllLines(path1)) {
-//
-//
-//                for (int i = 0; i < 3; i++) {
-//                    arrayList[i] = Arrays.toString(line.split(","));
-//                }
-//
-//            }System.out.println(Arrays.toString(arrayList));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         }
 
         private static void viewControlPanel () {
