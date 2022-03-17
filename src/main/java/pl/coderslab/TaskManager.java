@@ -87,7 +87,7 @@ public class TaskManager {
             try {
                 File file = new File("tasks.csv");
                 Scanner scan = new Scanner(file);
-                String[] usersArray = new String[getLinesNumber()];   // tworzymy tablice taskow o dlugosci linii tekstu z pliku
+                String[] usersArray = new String[getLinesNumber()];   // tworzymy tablice taskow o wielkosci odpowiadajacej linii tekstu z pliku
 
                 while (scan.hasNextLine()) {
 
@@ -97,26 +97,32 @@ public class TaskManager {
                     }
 
                 }
-                System.out.println(Arrays.toString(usersArray));
+              // System.out.println(Arrays.toString(usersArray));
                 String[][] taskArray=new String [getLinesNumber()][4];
                 for (int i = 0; i < getLinesNumber(); i++) {
                         taskArray[i]=usersArray[i].split(",");   //UZUPELNIAM TABLICE 2WYMIAROWA ELEMENTAMII Z KAZDEJ LINII ale bez licznika pozycji
                 }
-                System.out.println(Arrays.toString(taskArray[1]));
-                System.out.println(taskArray[1][1]);
+               // System.out.println(Arrays.toString(taskArray[1]));
+               // System.out.println(taskArray[1][1]);
                 String[][] numberedTaskArray=new String [getLinesNumber()][4];
                 int licznik=1;
                 for (int i = 0; i < getLinesNumber(); i++) {
-                    for (int j = 0; j < 3; j++) {
+                    for (int j = 0; j < 3;j++) {
 
                         numberedTaskArray[i][j+1] = taskArray[i][j];
-                        if (i==j+1) {                                                         // DODAWANIE NUMEROW WIERSZY
-                            numberedTaskArray[i][j] = (licznik)+":";
+                        if (j==0) {                                                         // DODAWANIE NUMEROW WIERSZY, dla pozycji 0 dodaje kolejny numer
+                            numberedTaskArray[i][0] = (licznik)+":";
+
                         }
-                    }
+                    }licznik++;
+
                 }
-                System.out.println("lista taskow ponumerowana");
+                System.out.println(Arrays.toString(numberedTaskArray[0]));
                 System.out.println(Arrays.toString(numberedTaskArray[1]));
+                System.out.println(Arrays.toString(numberedTaskArray[2]));
+                System.out.println(Arrays.toString(numberedTaskArray[3]));
+            //    System.out.println("lista taskow ponumerowana");
+              //  System.out.println(Arrays.toString(numberedTaskArray[1]));
 
             } catch (FileNotFoundException exception) {
                 exception.printStackTrace();
