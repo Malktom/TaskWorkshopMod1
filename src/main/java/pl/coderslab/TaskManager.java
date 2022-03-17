@@ -82,24 +82,38 @@ public class TaskManager {
         }  return lines;
     }
         private static void getList () {
-                 // licznik linijek podczas wczytywania
+
 
             try {
                 File file = new File("tasks.csv");
                 Scanner scan = new Scanner(file);
-                String[][] usersArray = new String[getLinesNumber()][3];   // tworzymy tablice taskow o dlugosci linii tekstu z pliku
+                String[] usersArray = new String[getLinesNumber()];   // tworzymy tablice taskow o dlugosci linii tekstu z pliku
+
                 while (scan.hasNextLine()) {
-                    String task = scan.nextLine();
+
                     for (int i = 0; i < getLinesNumber(); i++) {
-                        usersArray[i]=task.split(",");
-                     //   usersArray[i] = Arrays.toString(scan.nextLine().split(","));
+                        String task = scan.nextLine();
+                        usersArray[i] = task;                      //ZAPELNIAM TABLICE JEDNOWYMIAROWA LINIAMI Z PLIKU
+                       // for (int j = 0; j < 4; j++) {
+                           // usersArray[i][j] = Arrays.toString(task.split(","));
+                            //   usersArray[i] = Arrays.toString(scan.nextLine().split(","));
+                       // }
+                    }
+
+                    //System.out.println((Arrays.toString(usersArray[2])));
+                }
+                System.out.println(Arrays.toString(usersArray));
+                String[][] taskArray=new String [getLinesNumber()][4];
+                for (int i = 0; i < getLinesNumber(); i++) {
+                    for (int j = 0; j < 4; j++) {
+                        taskArray[i]=usersArray[i].split(",");   //UZUPELNIAM TABLICE 2WYMIAROWA ELEMENTAMII Z KAZDEJ LINII
 
                     }
-                    //System.out.println(scan.nextLine());
                 }
-
-                System.out.println((Arrays.toString(usersArray[1])));  // uzyc Stringbuildera !!!!!!!!!!!
-                System.out.println((usersArray[1][2]));
+                System.out.println(Arrays.toString(taskArray[1]));
+                System.out.println(taskArray[1][1]);
+                // uzyc Stringbuildera !!!!!!!!!!!
+               // System.out.println((usersArray[2][2]));
             } catch (FileNotFoundException exception) {
                 exception.printStackTrace();
             }
