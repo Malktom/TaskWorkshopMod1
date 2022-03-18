@@ -31,7 +31,7 @@ public class TaskManager {
                     addTask();
                     break;
                 case "remove":
-                    System.out.println("remove");
+                    remove(getList());
 
                     break;
                 case "list":
@@ -46,17 +46,28 @@ public class TaskManager {
     }
     private static void addTask() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Podaj dane:");
-        String option = scan.nextLine() + "\n";
+        System.out.println("Please add Task:");
+        String option = scan.nextLine() + "\n";   //dodawanie wiersza i skok do nowego wiersza
 
         Path path1 = Paths.get("tasks.csv");
         try {
-            Files.writeString(path1, option, StandardOpenOption.APPEND);   //   JAK DODAWAC WIERSZE OD NOWEJ LINII???
+            Files.writeString(path1, option, StandardOpenOption.APPEND);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    private static void remove(String[][] tasksList){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Please select number to remove:");
+        String rowToDelete = scan.nextLine()+":";
+        for (int i = 0; i < tasksList.length; i++) {
 
+       if (rowToDelete.equals(tasksList[i][0])) {                                   // znajdowanie nr linii do usuniecia
+                System.out.println("Task to remove:" + Arrays.toString(tasksList[i]));
+            }
+        }
+
+    }
     private static int getLinesNumber() {
         int lines = 0;
         try {
@@ -73,8 +84,9 @@ public class TaskManager {
         return lines;
     }
 
-    private static void getList() {
-
+    private static String[][] getList() {
+        String[][] taskArray = new String[getLinesNumber()][4];
+        String[][] numberedTaskArray = new String[getLinesNumber()][4];
         try {
             File file = new File("tasks.csv");
             Scanner scan = new Scanner(file);
@@ -87,11 +99,11 @@ public class TaskManager {
                     usersArray[i] = task;                      //ZAPELNIAM TABLICE JEDNOWYMIAROWA LINIAMI Z PLIKU
                 }
             }
-            String[][] taskArray = new String[getLinesNumber()][4];
+
             for (int i = 0; i < getLinesNumber(); i++) {
                 taskArray[i] = usersArray[i].split(",");   //UZUPELNIAM TABLICE 2WYMIAROWA ELEMENTAMII Z KAZDEJ LINII ale bez licznika pozycji
             }
-            String[][] numberedTaskArray = new String[getLinesNumber()][4];
+
             int licznik = 1;
             for (int i = 0; i < getLinesNumber(); i++) {
                 for (int j = 0; j < 3; j++) {
@@ -104,11 +116,12 @@ public class TaskManager {
                 licznik++;
             }
             for (int i = 0; i < numberedTaskArray.length; i++) {
-                System.out.println(Arrays.toString(numberedTaskArray[i]));
+                System.out.println(Arrays.toString(numberedTaskArray[i]));  // wyswietlanie listy taskow // do wyrzucenia
             }
         } catch (FileNotFoundException exception) {
             exception.printStackTrace();
         }
+            return numberedTaskArray;
     }
     private static void viewControlPanel() {
         System.out.println();
