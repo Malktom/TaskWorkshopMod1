@@ -44,6 +44,7 @@ public class TaskManager {
             viewControlPanel();
         }
     }
+
     private static void addTask() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Please add Task:");
@@ -56,18 +57,34 @@ public class TaskManager {
             e.printStackTrace();
         }
     }
-    private static void remove(String[][] tasksList){
+
+    private static void remove(String[][] tasksList) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Please select number to remove:");
-        String rowToDelete = scan.nextLine()+":";
-        for (int i = 0; i < tasksList.length; i++) {
+        String rowToDelete = scan.nextLine();                                               // DO POPRAWY - DWUKROTNE WPROWADZENIE DANYCH
+        if (isStringInt(rowToDelete)) {
+            rowToDelete = rowToDelete+ ":";
+            for (int i = 0; i < tasksList.length; i++) {
 
-       if (rowToDelete.equals(tasksList[i][0])) {                                   // znajdowanie nr linii do usuniecia
-                System.out.println("Task to remove:" + Arrays.toString(tasksList[i]));
+                if (rowToDelete.equals(tasksList[i][0])) {                                   // znajdowanie nr linii do usuniecia
+                    System.out.println("Task to remove:" + Arrays.toString(tasksList[i]));
+                }
             }
+        } else {
+            System.out.println("Incorrect number format, try again");
+        }
+    }
+
+    private static boolean isStringInt(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
         }
 
     }
+
     private static int getLinesNumber() {
         int lines = 0;
         try {
@@ -121,8 +138,9 @@ public class TaskManager {
         } catch (FileNotFoundException exception) {
             exception.printStackTrace();
         }
-            return numberedTaskArray;
+        return numberedTaskArray;
     }
+
     private static void viewControlPanel() {
         System.out.println();
         System.out.println(ConsoleColors.BLUE + "Please select an option");
