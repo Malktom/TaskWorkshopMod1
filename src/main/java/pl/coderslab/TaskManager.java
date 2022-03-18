@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -63,11 +64,12 @@ public class TaskManager {
         System.out.println("Please select number to remove:");
         String rowToDelete = scan.nextLine();                                               // DO POPRAWY - DWUKROTNE WPROWADZENIE DANYCH
         if (isStringInt(rowToDelete)) {
-            rowToDelete = rowToDelete+ ":";
+            rowToDelete = rowToDelete + ":";
             for (int i = 0; i < tasksList.length; i++) {
 
                 if (rowToDelete.equals(tasksList[i][0])) {                                   // znajdowanie nr linii do usuniecia
                     System.out.println("Task to remove:" + Arrays.toString(tasksList[i]));
+
                 }
             }
         } else {
@@ -75,10 +77,15 @@ public class TaskManager {
         }
     }
 
-    private static boolean isStringInt(String s) {
+    private static boolean isStringInt(String s) {                  //walidacja danych przy przy remove()
         try {
             Integer.parseInt(s);
-            return true;
+            if (Integer.parseInt(s) > 0) {
+                return true;
+            } else {
+                System.out.println("Number is less than 0");
+                return false;
+            }
         } catch (NumberFormatException ex) {
             return false;
         }
@@ -87,7 +94,7 @@ public class TaskManager {
 
     private static int getLinesNumber() {
         int lines = 0;
-        try {
+        try {                                                                   // JAK TU ZASTOSOWAC TRY WITH RESOURCES????
             File file = new File("tasks.csv");
             Scanner scan = new Scanner(file);
             while (scan.hasNextLine()) {
@@ -137,6 +144,8 @@ public class TaskManager {
             }
         } catch (FileNotFoundException exception) {
             exception.printStackTrace();
+            System.out.println("File not exist");
+            System.exit(0);
         }
         return numberedTaskArray;
     }
